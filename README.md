@@ -15,7 +15,6 @@ Available tasks:
 
 help:			 list available tasks
 test:			 run tests
-commit:		 auto commit work
 
 
 ```

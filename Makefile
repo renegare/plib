@@ -19,12 +19,14 @@ help:			## list available tasks
 test:			## run tests
 	./node_modules/.bin/mocha tests
 
-commit:		## auto commit work
+
+# dev tasks use at your own peril ;)
+
+commit:
 	$(MAKE) generate_readme
 	git add -A
 	git commit -am "$(if $(M),$(M),wip)"
-
-# git push
+	git push
 
 generate_readme:
 	@echo "\`\`\`\n:-)\n" > README.md
