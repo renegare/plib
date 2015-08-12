@@ -3,8 +3,8 @@ VERSION=$(shell git rev-parse --short HEAD)
 #!! PROD START
 help:			## list available tasks
 	@echo "\n\
-	   _ _ _\n\
-	  | (_) |\n\
+	       _ _ _\n\
+	      | (_) |\n\
 	 _ __ | |_| |__\n\
 	| '_ \| | | '_ \\ \n\
 	| |_) | | | |_) |\n\
@@ -18,3 +18,14 @@ help:			## list available tasks
 
 test:			## run tests
 	./node_modules/.bin/mocha tests
+
+commit:
+	$(MAKE) generate_readme
+	git add -A
+	git commit -am "$(if $(M),$(M),wip)"
+	git push
+
+generate_readme:
+	@echo "\`\`\`\n:-)\n" > README.md
+	@$(MAKE) >> README.md
+	@echo "\n\`\`\`" >> README.md
