@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/renegare/plib/issues"
   },
-  "homepage": "https://github.com/renegare/plib"
+  "homepage": "https://github.com/renegare/plib",
+  "dependencies": {
+    "mocha": "^2.2.5"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "dss": "^1.0.4",
+    "gonzales-pe": "^2.0.2"
+  }
 }

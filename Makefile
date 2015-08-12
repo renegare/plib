@@ -17,7 +17,9 @@ help:			## list available tasks
 	@echo
 
 test:			## run tests
-	./node_modules/.bin/mocha tests
+	@./node_modules/.bin/mocha --recursive tests \
+		$(if $G, --grep $G) \
+		$(if $W, -w)
 
 
 # dev tasks use at your own peril ;)
