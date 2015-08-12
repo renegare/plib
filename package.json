@@ -1,30 +1,42 @@
 {
   "name": "plib",
-  "version": "1.0.0",
-  "description": "``` :-)",
+  "version": "0.0.1",
+  "description": "NodeJS DSS based functions to help knock up a pattern library for a given project",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/renegare/plib.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "renegare",
+    "email": "mudi@renegare.com",
+    "url": "https://renegare.com"
+  },
+  "licenses": [
+    {
+      "type": "ISC",
+      "url": "https://github.com/renegare/plib/blob/master/LICENSE-ISC"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/renegare/plib/issues"
   },
   "homepage": "https://github.com/renegare/plib",
   "dependencies": {
-    "mocha": "^2.2.5"
+    "gonzales-pe": "^2.0.2"
   },
   "devDependencies": {
+    "mocha": "^2.2.5",
     "chai": "^3.2.0",
-    "dss": "^1.0.4",
-    "gonzales-pe": "^2.0.2"
+    "dss": "^1.0.4"
+  },
+  "engines": {
+    "node": ">= 0.10.37"
   }
 }
