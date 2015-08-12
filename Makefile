@@ -23,10 +23,10 @@ test:			## run tests
 # dev tasks use at your own peril ;)
 
 commit:
-	$(MAKE) generate_readme
-	git add -A
-	git commit -am "$(if $(M),$(M),wip)"
-	git push
+	@$(MAKE) generate_readme
+	@git add -A
+	@git commit -am "$(if $(M),$(M),wip)"
+	@git push
 
 generate_readme:
 	@echo "\`\`\`\n:-)\n" > README.md
