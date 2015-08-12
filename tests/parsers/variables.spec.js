@@ -17,15 +17,6 @@ describe('parse variables', function() {
                 '$primary-color: red;',
                 '$secondary-color: blue;',
                 '$tertiary-color: green;',
-
-                // '/**',
-                // ' * @name Grid dims',
-                // ' * @description Grid widths',
-                // ' * @variables',
-                // '*/',
-                // '$grid-gutter-width: 10px;',
-                // '$grid-cols: 10;',
-                // '$grid-col-width: 30px',
             ].join("\n"), {}, function(parsed) {
                 parsedData = parsed;
                 done();
@@ -94,6 +85,41 @@ describe('parse variables', function() {
                             {name: 'grid-gutter-width', value: '10px'},
                             {name: 'grid-cols', value: '10'},
                             {name: 'grid-col-width', value: '30px'}
+                        ]
+                    }
+                ]
+            });
+        });
+    });
+
+
+    describe('describe variable type', function() {
+        beforeEach(function(done) {
+            dss.parse([
+                '/**',
+                ' * @name Colours',
+                ' * @description Some nice colours',
+                ' * @variables colour',
+                '*/',
+                '$primary-color: red;',
+                '$secondary-color: blue;',
+                '$tertiary-color: green;',
+            ].join("\n"), {}, function(parsed) {
+                parsedData = parsed;
+                done();
+            });
+        });
+
+        it('should list variables in block', function() {
+            parsedData.should.eql({
+                blocks: [
+                    {
+                        name: 'Colours',
+                        description: 'Some nice colours',
+                        variables: [
+                            {name: 'primary-color', value: 'red', colour: true},
+                            {name: 'secondary-color', value: 'blue', colour: true},
+                            {name: 'tertiary-color', value: 'green', colour: true}
                         ]
                     }
                 ]

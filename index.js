@@ -4,13 +4,8 @@ var gonzales = require('gonzales-pe'),
 
 module.exports = {
     initVariableParser: function(dss, name, opts) {
-        dss.parser(name, function(i, line, commentBlock, file){
-            var ast = gonzales.cssToAST({
-                css: file,
-                syntax: 'scss'
-            });
-
-            var blocks = (function() {
+        dss.parser(name, function(i, type, commentBlock, file){
+            var blocks = function(ast) {
                 var currentBlock
                     ;
                 return ast.reduce(function(blocks, step) {
@@ -46,9 +41,17 @@ module.exports = {
                     .filter(function(block) {
                         return block.comment.indexOf(commentBlock) > -1;
                     });
-                })();
+                }(gonzales.cssToAST({
+                    css: file,
+                    syntax: 'scss'
+                }));
 
-            return blocks.length? blocks.shift().variables : [];
+            return (blocks.length? blocks.shift().variables : []).map(function(variable) {
+                if(type) {
+                    variable[type] = true;
+                }
+                return variable;
+            });
         });
     }
 }
