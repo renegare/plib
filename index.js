@@ -3,42 +3,40 @@ var gonzales = require('gonzales-pe'),
     ;
 
 function getVariableValue(ast, delim) {
+    if(!util.isArray(ast) || ast.length < 1) {
+        throw new Error('Cannot understand AST:' + JSON.stringify(ast));
+    }
+
     delim = typeof delim === 'undefined'? ', ' : delim;
-    if(ast.length === 1) {
-        var value = ast[0];
-        var type = value[0];
 
-        switch(type) {
-            case 'dimension':
-                value = getVariableValue(value.slice(1), '').value;
-                break;
-            case 'percentage':
-                value = getVariableValue([value[1]]).value + '%';
-                break;
-            default:
-                value = value[1];
-        }
-
+    if(ast.length > 1) {
         return {
-            value: value,
-            type: type
-        }
-    } else if(util.isArray(ast) && ast.length > 1) {
-        var value = ast.map(function(item) {
-            return getVariableValue([item]).value;
-        }).join(delim);
-
-        return {
-            value: value,
+            value: ast.map(function(item) {
+                    return getVariableValue([item]).value;
+                }).join(delim),
             type: 'list'
         };
     }
 
-    throw new Error('Not implemented');
-}
+    var value = ast[0],
+        type = value[0]
+        ;
 
-function getVariableType(ast) {
+    switch(type) {
+        case 'dimension':
+            value = getVariableValue(value.slice(1), '').value;
+            break;
+        case 'percentage':
+            value = getVariableValue([value[1]]).value + '%';
+            break;
+        default:
+            value = value[1];
+    }
 
+    return {
+        value: value,
+        type: type
+    };
 }
 
 function getVariable(ast) {
@@ -53,30 +51,6 @@ function getVariable(ast) {
         type: variable.type,
         value: variable.value
     };
-
-    // var variable;
-    // switch(type) {
-    //     case 'pixel':
-    //         variable = step[3][2][1][1] + step[3][2][2][1]
-    //         break;
-    //     case 'em':
-    //         variable = step[3][2][1].pop() + step[3][2][2].pop();
-    //         break;
-    //     case 'percentage':
-    //         variable = step[3][2][1].pop() + '%';
-    //         break;
-    //     case 'list':
-    //         variable = step[3].filter(function(item) {
-    //             return item.length && item[0] === 'number';
-    //         }).map(function(item) {
-    //             return item[1];
-    //         }).join(', ')
-    //         ;
-    //         break;
-    //     default:
-    //         variable = step[3][2].pop();
-    //         break;
-    // }
 }
 
 
@@ -98,11 +72,6 @@ module.exports = {
                                     currentBlock = block;
                                     break;
                                 case 'declaration':
-                                    // var name = step[1][1][1][1],
-                                    //     type = step[1][1][1][1]
-                                    //     ;
-                                    //
-                                    // dir(step)
                                     if(currentBlock) {
                                         currentBlock.variables.push(getVariable(step));
                                     }
