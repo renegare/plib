@@ -15,8 +15,8 @@ describe('parse variables', function() {
                 ' * @variables',
                 '*/',
                 '$primary-color: red;',
-                '$secondary-color: blue;',
-                '$tertiary-color: green;',
+                '$secondary-color: 1;',
+                '$tertiary-color: 2%;',
             ].join("\n"), {}, function(parsed) {
                 parsedData = parsed;
                 done();
@@ -31,8 +31,8 @@ describe('parse variables', function() {
                         description: 'Some nice colours',
                         variables: [
                             {name: 'primary-color', value: 'red'},
-                            {name: 'secondary-color', value: 'blue'},
-                            {name: 'tertiary-color', value: 'green'}
+                            {name: 'secondary-color', value: '1'},
+                            {name: 'tertiary-color', value: '2%'}
                         ]
                     }
                 ]
